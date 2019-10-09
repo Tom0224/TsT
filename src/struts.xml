@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+			<package name = "package" extends = "struts-default" namespace = "/">
+				<action name = "book_*" class = "com.baizhi.action.BookAction" method = "{1}" >
+					
+				
+					 <result name = "tolist">/main/recommend.jsp</result>
+					 <result name = "hot">/main/hot.jsp</result>
+					 <result name = "new">/main/new.jsp</result>
+					 <result name = "hotBoard">/main/hotBoard.jsp</result>
+					 <result name = "product">/main/product.jsp</result>
+					 <result name = "book_list">/main/book_list.jsp</result>
+					
+					
+				
+					<!-- <result name = "selectall">/hero/selectall.jsp</result>
+				
+					<result name="toList" type="redirectAction">hero_selectheroall</result>
+					<result name="toList1">/hero/selectall.jsp</result>
+					<result name = "update">/hero/update.jsp</result>
+					<result name = "insert">/hero/insert.jsp</result> -->
+				</action>
+				<action name = "categ_*" class = "com.baizhi.action.CategoryAction" method = "{1}" >
+				
+				 <result name = "category">/main/category.jsp</result>
+				</action>	
+				
+							
+				<action name = "user_*" class = "com.baizhi.action.UserAction" method = "{1}" >
+				
+				 <result name = "success" type="redirect">/main/main.jsp</result>
+				 <result name = "error" type="redirect">/user/login_form.jsp</result>
+				 <result name = "register" type="redirect">/user/register_form.jsp</result>
+				<result name="url" type="redirectAction">${uri}</result>
+				</action>
+								
+				<action name = "address_*" class = "com.baizhi.action.AddressAction" method = "{1}" >
+				<result name = "error" type="dispatcher">/user/login_form.jsp</result>
+				<result name = "selectexist" type="chain">address_selectexist</result>
+				 <result name = "my_address" >/address/my_address.jsp</result>
+				
+				</action>				
+			
+				<action name = "cart_*" class = "com.baizhi.action.CartAction" method = "{1}" >
+					
+						 <result name = "cart" >/cart/cart_list.jsp</result>
+				
+				</action>	
+				<action name = "oreder_*" class = "com.baizhi.action.OrederAction" method = "{1}" >
+					
+						 <result name = "address_form" >/order/address_form.jsp</result>
+						 <result name = "error" type="redirect">/user/login_form.jsp</result>
+				
+				</action>	
+			
+			
+			</package>
+
+	
+
+</struts>

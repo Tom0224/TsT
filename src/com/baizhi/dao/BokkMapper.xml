@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.baizhi.dao.BookDao">
+	<resultMap type="com.baizhi.entity.BookEntity" id="BookMapper">
+		<id column="book_id" property="book_id" />
+		<id column="cid" property="cid" />
+		<result column="book_name" property="book_name" />
+		<result column="book_prive" property="book_prive" />
+		<result column="groundingDate" property="groundingDate" />
+		<result column="inventoty" property="inventoty" />
+		<result column="author" property="author" />
+		<result column="salenum" property="salenum" />
+		<result column="messages" property="messages" />
+		<result column="Dangproce" property="Dangproce" />
+		<result column="product_image" property="product_image" />
+
+		<collection property="item" ofType="com.baizhi.entity.OrderItemEntity">
+			<id column="oid" property="id" />
+			<result column="oproduct_id" property="product_id" />
+			
+			<result column="order_id" property="order_id" />
+			
+			<result column="count" property="count" />
+			
+			<result column="amount" property="amount" />
+			
+			<result column="osaveMoney" property="saveMoney" />
+			
+			
+		</collection>
+
+	</resultMap>
+	<select id="selectbookall" resultMap="BookMapper" >
+		select t.*
+		from(select * from d_book order by ${row} ) t
+		where rownum between 1 and #{rownum}
+	</select>
+	 <select id="selectBookEntityId" resultMap="BookMapper">
+	 	select b.*, d2.category_name d2name, d1.category_name d1name
+  			from d_book b
+		    left join d_category d2
+		    on b.cid = d2.category_id
+		    left join d_category d1
+		    on d2.parent_id = d1.category_id
+		 	where b.book_id = #{id}
+	 </select>
+	 <select id="selectByOnelevel" resultMap="BookMapper">
+	 	select *
+  		from (select t.*, rownum r
+          from (select b.*, d2.category_name d2name, d1.category_name d1name
+                  from d_book b
+                  left join d_category d2
+                    on b.cid = d2.category_id
+                  left join d_category d1
+                    on d2.parent_id = d1.category_id
+                 where d1.category_id = #{id}) t)
+ 		where r between #{start} and #{end}
+	 </select>
+	 <select id="selectsum" resultType="int">
+	 	 	select count(*)
+	              from d_book b
+	              left join d_category d2
+	                on b.cid = d2.category_id
+	              left join d_category d1
+	                on d2.parent_id = d1.category_id
+	             where d1.category_id = #{value}
+	 </select>
+	 <select id="selectsalenumdes" resultMap="BookMapper">
+	 	select *
+  		from (select t.*, rownum r from (select * from d_book b where b.cid = #{id}) t)
+ 		where r between #{start} and #{end}
+	 </select>
+	 <select id="selectCountTwolevel" resultType="int">
+	 	 	select count(*) from d_book b 
+	 	 	where b.cid = #{value}
+	 </select>
+	 <select id="selectByid" resultMap="BookMapper">
+	 	select * from d_book where book_id = #{value}
+	 </select>
+
+
+
+</mapper>	

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.baizhi.dao.AddressDao">
+	<resultMap type="com.baizhi.entity.AddressEntity" id="AddressMapper">
+		<id column="id" property="id"/>
+		<result column ="receive_name" property="receive_name" />
+		<result column ="address" property="address" />
+		<result column ="mobile" property="mobile"/>
+		<result column ="u_id" property="u_id"/>
+		<result column ="delete_state" property="delete_state"/>
+		<result column ="selected_state" property="selected_state"/>
+		
+		<association property="user" javaType="com.baizhi.entity.UserEntity">
+			<id column="id" property="id"/>
+			<result column="email" property="email"/>
+			<result column="nickname" property="nickname"/>
+			<result column="password" property="password"/>
+			<result column="state" property="state"/>
+		</association>
+	</resultMap>
+	<select id="selectexist" resultMap="AddressMapper">
+		select * from d_address where u_id = #{value}
+	
+	</select>
+	<insert id="insertexist">
+		insert into d_address values(ems_address.nextval,#{receive_name},#{address},#{mobile},#{u_id},1,0)
+	</insert>
+	<update id="updatedelete">
+		update  d_address set delete_state = 0 where id =#{value}
+	</update>
+	<update id="updateselected">
+		update  d_address set selected_state = 1 where id = #{value}
+	</update>
+	<update id="updateselectedall">
+		       update d_address set selected_state = 0                                                                                  
+	</update>
+
+
+</mapper>

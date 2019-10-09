@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+
+  
+  	<!-- struts核心过滤器 -->
+  <filter>
+  	<filter-name>struts2</filter-name>
+  	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>struts2</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
+    <servlet>
+  
+  		<servlet-name>ImageServlet</servlet-name>
+  		<servlet-class>com.baizhi.servlet.ImageServlet</servlet-class>
+  
+  
+  </servlet>
+  <servlet-mapping>
+  		<servlet-name>ImageServlet</servlet-name>
+  		<url-pattern>/text.servlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+</web-app>

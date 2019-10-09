@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.dao.UserDao"> 
+	<resultMap type="com.baizhi.entity.UserEntity" id="UserMapper">
+		<id column="id" property="id"/>
+		<result column="email" property="email"/>
+		<result column="nickname" property="nickname"/>
+		<result column="password" property="password"/>
+		<result column="state" property="state"/>
+		<collection property="add" ofType="com.baizhi.entity.AddressEntity">
+			<id column="id" property="id"/>
+			<result column="receive_name" property="receive_name"/>
+			<result column="address" property="address"/>
+			<result column="mobile" property="mobile"/>
+			<result column="u_id" property="u_id"/>
+			<result column="dekete_state" property="dekete_state"/>
+			<result column="select_state" property="select_state"/>
+		</collection>
+	</resultMap>
+	<select id="selectexist" resultMap="UserMapper">
+		select * from d_user 
+		where email = #{email}  and password =#{password}
+	</select>
+	<insert id="interUser" >
+		insert into d_user values(ems_user.nextval,#{email},#{nickname},#{password},1)
+	</insert>
+</mapper>

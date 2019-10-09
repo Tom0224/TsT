@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.baizhi.dao.CategoryDao">
+	<resultMap type="com.baizhi.entity.CategoryEntity" id="CategoryMapper">
+
+		<id column="category_id" property="category_id" />
+
+		<result column="parent_id" property="parent_id" />
+		<result column="count" property="count" />
+		<result column="category_name" property="category_name" />
+
+
+		<collection property="catrgory" ofType="com.baizhi.entity.CategoryEntity">
+			<id column="c_id" property="category_id" />
+			<result column="cp_id" property="parent_id" />
+			<result column="c_name" property="category_name" />
+
+
+		</collection>
+		<collection property="book" ofType="com.baizhi.entity.BookEntity">
+
+			<id column="book_id" property="book_id" />
+			<id column="cid" property="cid" />
+			<result column="book_name" property="book_name" />
+			<result column="book_prive" property="book_prive" />
+			<result column="groundingDate" property="groundingDate" />
+			<result column="inventoru" property="inventoru" />
+			<result column="author" property="author" />
+			<result column="salenum" property="salenum" />
+			<result column="messages" property="messages" />
+			<result column="Dangproce" property="Dangproce" />
+			<result column="prouduct_image" property="prouduct_image" />
+
+		</collection>
+	</resultMap>
+
+
+	<select id="selectCateAndCountBycid" resultMap="CategoryMapper">
+		
+		select d.category_id,d.category_name,count(book_id) as count
+		from d_category d left join d_book d1
+		on d.category_id = d1.cid
+		where parent_id = (select parent_id from d_category where category_id=#{value})
+		group by d.category_id,d.category_name
+		
+
+	</select>
+	<select id="selectCateAndCountByScid" resultMap="CategoryMapper">
+		select d.category_id,d.category_name,count(book_id) as count
+		from d_category d left join d_book d1
+		on d.category_id = d1.cid
+		where parent_id = #{vakue}
+		group by d.category_id,d.category_name
+
+	</select>
+
+	<select id="selectall" resultMap="CategoryMapper">
+		select d1.*,d2.category_id c_id,d2.parent_id cp_id,d2.category_name
+		c_name
+		from d_category d1 left join d_category d2
+		on d1.category_id = d2.parent_id
+		where d1.parent_id is null
+
+	</select>
+	<select id="selectcategorybook" resultMap="CategoryMapper">
+
+
+
+	</select>
+
+</mapper>

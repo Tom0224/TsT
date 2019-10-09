@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.baizhi.dao.OrderDao">
+	<resultMap type="com.baizhi.entity.OrderEntity" id="OrderMapper">
+		<id column="id" property="id" />
+		
+		<id column="goodprice" property="goodprice" />
+		
+		<result column="ordertime" property="ordertime" />
+		
+		<result column="orderstate" property="orderstate" />
+		
+		<result column="address_id" property="address_id" />
+		
+		<result column="user_id" property="user_id" />
+		
+		
+		
+		
+		<association property="item" javaType="com.baizhi.entity.OrderItemEntity">
+
+			<id column="cid" property="id" />
+
+			<result column="product_id" property="product_id" />
+			
+			<result column="order_id" property="order_id" />
+			
+			<result column="count" property="count" />
+			
+			<result column="amount" property="amount" />
+			
+			<result column="saveMoney" property="saveMoney" />
+		
+
+		</association>
+	
+	</resultMap>
+	<select id="selectorder" resultMap="OrderMapper">
+			select * from d_order where user_id = #{value}
+	
+	</select>
+	<insert id="insertorder">
+			<selectKey order = "BEFORE" keyProperty="id" resultType="int">
+			select ems_order.nextval from  d_order
+			 </selectKey>
+		insert into d_order values(#{id},#{goodprice},sysdate,1,#{address_id},#{user_id})	 
+	
+	</insert>
+</mapper>
